@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import connectDB from "./utils/db";
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ app.use(express.json());
 // Environment
 // =========================
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT;
 
 // =========================
 // Routes
@@ -44,5 +45,6 @@ app.get("/health", (req: Request, res: Response) => {
 // =========================
 
 app.listen(PORT, () => {
+  connectDB();
   console.log(`🚀 Server running on port ${PORT}`);
 });
