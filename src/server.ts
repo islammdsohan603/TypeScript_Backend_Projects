@@ -19,7 +19,7 @@ app.use(express.json());
 // Environment
 // =========================
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8000;
 
 // =========================
 // Routes
