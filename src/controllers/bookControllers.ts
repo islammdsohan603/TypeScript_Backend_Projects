@@ -58,7 +58,7 @@ export const addBook = async (req: Request, res: Response): Promise<void> => {
 // =========================
 // Edit Book
 // =========================
-export const editBook = async (req: Request, res: Response) => {
+export const updateBook = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
