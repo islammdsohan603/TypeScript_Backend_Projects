@@ -46,6 +46,7 @@ export const addBook = async (req: Request, res: Response): Promise<void> => {
     });
   } catch (error) {
     const err = error as Error;
+    console.log("error", err);
 
     res.status(500).json({
       success: false,
