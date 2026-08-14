@@ -1,18 +1,42 @@
 import { model, Schema } from "mongoose";
 
-interface IBook {
+export interface IBook {
   name: string;
   author: string;
   publishYear: number;
   description: string;
 }
 
-const bookSchema = new Schema<IBook>({
-  name: { type: String, required: true },
-  author: { type: String, required: true },
-  publishYear: { type: Number, required: true },
-  description: { type: String, required: true },
-});
+const bookSchema = new Schema<IBook>(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    author: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    publishYear: {
+      type: Number,
+      required: true,
+    },
+
+    description: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+  },
+  {
+    timestamps: true,
+  },
+);
 
 const Book = model<IBook>("Book", bookSchema);
-export { IBook, Book };
+
+export default Book;
