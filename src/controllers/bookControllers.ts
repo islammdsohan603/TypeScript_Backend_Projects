@@ -56,7 +56,7 @@ export const addBook = async (req: Request, res: Response): Promise<void> => {
 };
 
 // =========================
-// Edit Book
+// Edit Book by id
 // =========================
 export const updateBook = async (req: Request, res: Response) => {
   try {
@@ -97,6 +97,43 @@ export const updateBook = async (req: Request, res: Response) => {
     return res.status(500).json({
       success: false,
       message: err.message,
+    });
+  }
+};
+
+// =========================
+// Delete Book by ID
+// =========================
+
+export const deleteBook = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const { id } = req.params;
+
+    const deletedBook = await Book.findByIdAndDelete(id);
+
+    if (!deletedBook) {
+      res.status(404).json({
+        success: false,
+        message: "Book not found",
+      });
+
+      return;
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Book deleted successfully",
+      data: deletedBook,
+    });
+  } catch (err) {
+    const error = err as Error;
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
     });
   }
 };
