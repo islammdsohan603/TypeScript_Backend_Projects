@@ -1,8 +1,8 @@
 import { Router } from "express";
 import bookRouter from "./bookRoute";
 
-const routers = Router();
+const router = Router();
 
-routers.use("/book", bookRouter);
+router.use("/book", bookRouter);
 
-export default routers;
+export default router;

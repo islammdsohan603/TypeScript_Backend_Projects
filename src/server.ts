@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./utils/db";
-import bookRouter from "./route/bookRoute";
+import router from "./route";
 
 dotenv.config();
 
@@ -19,16 +19,18 @@ app.use(express.json());
 // Environment
 // =========================
 
-const PORT = process.env.PORT || 8000;
+const PORT = Number(process.env.PORT) || 8000;
 
 // =========================
 // Routes
-
-app.use("/api", bookRouter);
-
 // =========================
 
-// Home route
+app.use("/api", router);
+
+// =========================
+// Home Route
+// =========================
+
 app.get("/", (req: Request, res: Response) => {
   res.status(200).json({
     success: true,
@@ -36,7 +38,10 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
-// Health check
+// =========================
+// Health Check
+// =========================
+
 app.get("/health", (req: Request, res: Response) => {
   res.status(200).json({
     success: true,
@@ -48,7 +53,17 @@ app.get("/health", (req: Request, res: Response) => {
 // Start Server
 // =========================
 
-app.listen(PORT, () => {
-  connectDB();
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+const startServer = async () => {
+  try {
+    await connectDB();
+
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("❌ Failed to start server:", error);
+    process.exit(1);
+  }
+};
+
+startServer();
